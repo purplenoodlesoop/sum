@@ -1,5 +1,17 @@
 import 'package:meta/meta.dart';
 
+// --- Abstract --- //
+
+/// A sum type for asynchronous data that is obtained as a result of an
+/// operation.
+///
+/// Has four variations – `initial`, `loading`, `success` and `error`.
+/// `success` stores [data], while `error` stores [error] and `initial` and
+/// `loading` are empty.
+///
+/// An example of usage would be a result of an HTTP request through its
+/// stages.
+
 @immutable
 @sealed
 abstract class OperationAsyncData<E extends Object?, D extends Object?> {
@@ -87,6 +99,8 @@ abstract class OperationAsyncData<E extends Object?, D extends Object?> {
     R Function(E error)? error,
   });
 }
+
+// --- Initial --- //
 
 @immutable
 @sealed
@@ -198,6 +212,8 @@ class OperationAsyncDataInitial<E extends Object?, D extends Object?>
   int get hashCode => runtimeType.hashCode;
 }
 
+// --- Loading --- //
+
 @immutable
 @sealed
 class OperationAsyncDataLoading<E extends Object?, D extends Object?>
@@ -307,6 +323,8 @@ class OperationAsyncDataLoading<E extends Object?, D extends Object?>
   @override
   int get hashCode => runtimeType.hashCode;
 }
+
+// --- Success --- //
 
 @immutable
 @sealed
@@ -419,6 +437,8 @@ class OperationAsyncDataSuccess<E extends Object?, D extends Object?>
   @override
   int get hashCode => data.hashCode;
 }
+
+// --- Error --- //
 
 @immutable
 @sealed

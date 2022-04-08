@@ -1,5 +1,7 @@
 import 'package:meta/meta.dart';
 
+// --- Abstract --- //
+
 @immutable
 @sealed
 abstract class Either<L, R> {
@@ -55,6 +57,8 @@ abstract class Either<L, R> {
     T Function(R right)? right,
   });
 }
+
+// --- Left --- //
 
 @immutable
 @sealed
@@ -136,6 +140,8 @@ class Left<L, R> extends Either<L, R> {
   @override
   int get hashCode => left.hashCode;
 }
+
+// --- Right --- //
 
 @immutable
 @sealed

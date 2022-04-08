@@ -1,6 +1,6 @@
-// --- Abstract --- //
-
 import 'package:meta/meta.dart';
+
+// --- Abstract --- //
 
 /// A sum type for asynchronous data that is present in every of its states.
 ///

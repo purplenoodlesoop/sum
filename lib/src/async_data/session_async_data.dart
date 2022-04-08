@@ -1,5 +1,17 @@
 import 'package:meta/meta.dart';
 
+// --- Abstract --- //
+
+/// A sum type for asynchronous data that is obtained through some kind of
+/// ongoing session.
+///
+/// Has six different variations – `initial`, `connecting`, `idle`, `updating`,
+/// `error` and `fatalError`. `idle`, `updating` and `error` has [data], while
+/// `error` and `fatalError` additionally has [error].
+///
+/// An example of usage would be a communications stages with a local database
+/// or a WebSocket.
+
 @immutable
 @sealed
 abstract class SessionAsyncData<E extends Object?, D extends Object?> {
@@ -114,6 +126,8 @@ abstract class SessionAsyncData<E extends Object?, D extends Object?> {
     R Function(E error)? fatalError,
   });
 }
+
+// --- Initial --- //
 
 @immutable
 @sealed
@@ -243,6 +257,8 @@ class SessionAsyncDataInitial<E extends Object?, D extends Object?>
   int get hashCode => runtimeType.hashCode;
 }
 
+// --- Connecting --- //
+
 @immutable
 @sealed
 class SessionAsyncDataConnecting<E extends Object?, D extends Object?>
@@ -370,6 +386,8 @@ class SessionAsyncDataConnecting<E extends Object?, D extends Object?>
   @override
   int get hashCode => runtimeType.hashCode;
 }
+
+// --- Idle --- //
 
 @immutable
 @sealed
@@ -499,6 +517,8 @@ class SessionAsyncDataIdle<E extends Object?, D extends Object?>
   int get hashCode => data.hashCode;
 }
 
+// --- Updating --- //
+
 @immutable
 @sealed
 class SessionAsyncDataUpdating<E extends Object?, D extends Object?>
@@ -626,6 +646,8 @@ class SessionAsyncDataUpdating<E extends Object?, D extends Object?>
   @override
   int get hashCode => data.hashCode;
 }
+
+// --- Error --- //
 
 @immutable
 @sealed
@@ -764,6 +786,8 @@ class SessionAsyncDataError<E extends Object?, D extends Object?>
   @override
   int get hashCode => data.hashCode ^ error.hashCode;
 }
+
+// --- Fatal error --- //
 
 @immutable
 @sealed

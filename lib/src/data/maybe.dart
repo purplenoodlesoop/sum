@@ -52,6 +52,8 @@ abstract class Maybe<A> {
   });
 }
 
+// --- Nothing --- //
+
 @immutable
 @sealed
 class Nothing<A> extends Maybe<A> {
@@ -127,6 +129,8 @@ class Nothing<A> extends Maybe<A> {
   @override
   int get hashCode => runtimeType.hashCode;
 }
+
+// --- Just --- //
 
 @immutable
 @sealed
