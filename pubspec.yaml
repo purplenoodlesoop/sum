@@ -1,5 +1,5 @@
 name: sum
-description: A starting point for Dart libraries or applications.
+description: Useful Sum types/Unions expressed in Dart for asynchronous data, error handling, and more!
 version: 1.0.0
 # homepage: https://www.example.com
 
