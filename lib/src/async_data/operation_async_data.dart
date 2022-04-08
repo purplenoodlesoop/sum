@@ -1,8 +1,14 @@
+import 'package:meta/meta.dart';
+
+@immutable
+@sealed
 abstract class OperationAsyncData<E extends Object?, D extends Object?> {
   const OperationAsyncData._();
 
+  @literal
   const factory OperationAsyncData.initial() = OperationAsyncDataInitial;
 
+  @literal
   const factory OperationAsyncData.loading() = OperationAsyncDataLoading;
 
   const factory OperationAsyncData.success({
@@ -82,8 +88,11 @@ abstract class OperationAsyncData<E extends Object?, D extends Object?> {
   });
 }
 
+@immutable
+@sealed
 class OperationAsyncDataInitial<E extends Object?, D extends Object?>
     extends OperationAsyncData<E, D> {
+  @literal
   const OperationAsyncDataInitial() : super._();
 
   @override
@@ -189,8 +198,11 @@ class OperationAsyncDataInitial<E extends Object?, D extends Object?>
   int get hashCode => runtimeType.hashCode;
 }
 
+@immutable
+@sealed
 class OperationAsyncDataLoading<E extends Object?, D extends Object?>
     extends OperationAsyncData<E, D> {
+  @literal
   const OperationAsyncDataLoading() : super._();
 
   @override
@@ -296,6 +308,8 @@ class OperationAsyncDataLoading<E extends Object?, D extends Object?>
   int get hashCode => runtimeType.hashCode;
 }
 
+@immutable
+@sealed
 class OperationAsyncDataSuccess<E extends Object?, D extends Object?>
     extends OperationAsyncData<E, D> {
   @override
@@ -406,6 +420,8 @@ class OperationAsyncDataSuccess<E extends Object?, D extends Object?>
   int get hashCode => data.hashCode;
 }
 
+@immutable
+@sealed
 class OperationAsyncDataError<E extends Object?, D extends Object?>
     extends OperationAsyncData<E, D> {
   @override

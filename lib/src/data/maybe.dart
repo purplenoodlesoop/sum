@@ -1,6 +1,11 @@
+import 'package:meta/meta.dart';
+
+@immutable
+@sealed
 abstract class Maybe<A> {
   const Maybe._();
 
+  @literal
   const factory Maybe.nothing() = Nothing;
   const factory Maybe.just(A value) = Just;
 
@@ -47,7 +52,10 @@ abstract class Maybe<A> {
   });
 }
 
+@immutable
+@sealed
 class Nothing<A> extends Maybe<A> {
+  @literal
   const Nothing() : super._();
 
   @override
@@ -120,6 +128,8 @@ class Nothing<A> extends Maybe<A> {
   int get hashCode => runtimeType.hashCode;
 }
 
+@immutable
+@sealed
 class Just<A> extends Maybe<A> {
   @override
   final A value;

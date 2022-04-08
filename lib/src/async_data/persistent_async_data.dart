@@ -1,5 +1,7 @@
 // --- Abstract --- //
 
+import 'package:meta/meta.dart';
+
 /// A sum type for asynchronous data that is present in every of its states.
 ///
 /// Has three variations – `loading`, `idle` and `error`. Every state has a
@@ -8,6 +10,8 @@
 ///
 /// An example of usage would be a state of apps settings – they are present
 /// from the start and throughout the app and can be loaded, idle or error.
+@immutable
+@sealed
 abstract class PersistentAsyncData<E extends Object?, D extends Object?> {
   final D data;
 
@@ -83,6 +87,8 @@ abstract class PersistentAsyncData<E extends Object?, D extends Object?> {
 
 // --- Idle --- //
 
+@immutable
+@sealed
 class PersistentAsyncDataIdle<E extends Object?, D extends Object?>
     extends PersistentAsyncData<E, D> {
   const PersistentAsyncDataIdle({
@@ -177,6 +183,8 @@ class PersistentAsyncDataIdle<E extends Object?, D extends Object?>
 
 // --- Loading --- //
 
+@immutable
+@sealed
 class PersistentAsyncDataLoading<E extends Object?, D extends Object?>
     extends PersistentAsyncData<E, D> {
   const PersistentAsyncDataLoading({
@@ -271,6 +279,8 @@ class PersistentAsyncDataLoading<E extends Object?, D extends Object?>
 
 // --- Error --- //
 
+@immutable
+@sealed
 class PersistentAsyncDataError<E extends Object?, D extends Object?>
     extends PersistentAsyncData<E, D> {
   @override

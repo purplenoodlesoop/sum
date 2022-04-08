@@ -1,8 +1,14 @@
+import 'package:meta/meta.dart';
+
+@immutable
+@sealed
 abstract class SessionAsyncData<E extends Object?, D extends Object?> {
   const SessionAsyncData._();
 
+  @literal
   const factory SessionAsyncData.initial() = SessionAsyncDataInitial;
 
+  @literal
   const factory SessionAsyncData.connecting() = SessionAsyncDataConnecting;
 
   const factory SessionAsyncData.idle({
@@ -109,8 +115,11 @@ abstract class SessionAsyncData<E extends Object?, D extends Object?> {
   });
 }
 
+@immutable
+@sealed
 class SessionAsyncDataInitial<E extends Object?, D extends Object?>
     extends SessionAsyncData<E, D> {
+  @literal
   const SessionAsyncDataInitial() : super._();
 
   @override
@@ -234,8 +243,11 @@ class SessionAsyncDataInitial<E extends Object?, D extends Object?>
   int get hashCode => runtimeType.hashCode;
 }
 
+@immutable
+@sealed
 class SessionAsyncDataConnecting<E extends Object?, D extends Object?>
     extends SessionAsyncData<E, D> {
+  @literal
   const SessionAsyncDataConnecting() : super._();
 
   @override
@@ -359,6 +371,8 @@ class SessionAsyncDataConnecting<E extends Object?, D extends Object?>
   int get hashCode => runtimeType.hashCode;
 }
 
+@immutable
+@sealed
 class SessionAsyncDataIdle<E extends Object?, D extends Object?>
     extends SessionAsyncData<E, D> {
   @override
@@ -485,6 +499,8 @@ class SessionAsyncDataIdle<E extends Object?, D extends Object?>
   int get hashCode => data.hashCode;
 }
 
+@immutable
+@sealed
 class SessionAsyncDataUpdating<E extends Object?, D extends Object?>
     extends SessionAsyncData<E, D> {
   @override
@@ -611,6 +627,8 @@ class SessionAsyncDataUpdating<E extends Object?, D extends Object?>
   int get hashCode => data.hashCode;
 }
 
+@immutable
+@sealed
 class SessionAsyncDataError<E extends Object?, D extends Object?>
     extends SessionAsyncData<E, D> {
   @override
@@ -747,6 +765,8 @@ class SessionAsyncDataError<E extends Object?, D extends Object?>
   int get hashCode => data.hashCode ^ error.hashCode;
 }
 
+@immutable
+@sealed
 class SessionAsyncDataFatalError<E extends Object?, D extends Object?>
     extends SessionAsyncData<E, D> {
   @override

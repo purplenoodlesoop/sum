@@ -1,3 +1,7 @@
+import 'package:meta/meta.dart';
+
+@immutable
+@sealed
 abstract class Either<L, R> {
   const Either._();
 
@@ -52,6 +56,8 @@ abstract class Either<L, R> {
   });
 }
 
+@immutable
+@sealed
 class Left<L, R> extends Either<L, R> {
   @override
   final L left;
@@ -131,6 +137,8 @@ class Left<L, R> extends Either<L, R> {
   int get hashCode => left.hashCode;
 }
 
+@immutable
+@sealed
 class Right<L, R> extends Either<L, R> {
   @override
   final R right;
