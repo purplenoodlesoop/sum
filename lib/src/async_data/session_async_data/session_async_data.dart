@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:sum/src/async_data/session_async_data/session_async_data_matcher.dart';
 
 // --- Abstract --- //
 
@@ -60,6 +61,15 @@ abstract class SessionAsyncData<E extends Object?, D extends Object?> {
   bool get hasData => data != null;
 
   bool get hasError => error != null;
+
+  SessionAsyncDataMatcher<E, D> get matcher => SessionAsyncDataMatcher(
+        isInitial: isInitial,
+        isConnecting: isConnecting,
+        isOperational: isIdle || isUpdating || isError,
+        isFatalError: isFatalError,
+        data: data,
+        error: error,
+      );
 
   SessionAsyncData<E, B> map<B extends Object?>(
     B Function(D data) mapper,
