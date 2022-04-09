@@ -38,6 +38,21 @@ abstract class PersistentAsyncData<E extends Object?, D extends Object?> {
 
   bool get isError;
 
+  bool get hasError => error != null;
+
+  PersistentAsyncDataIdle<E, D> toIdle() => PersistentAsyncDataIdle(
+        data: data,
+      );
+
+  PersistentAsyncDataLoading<E, D> toLoading() => PersistentAsyncDataLoading(
+        data: data,
+      );
+
+  PersistentAsyncDataError<E, D> toError(E error) => PersistentAsyncDataError(
+        data: data,
+        error: error,
+      );
+
   PersistentAsyncData<E, B> map<B extends Object?>(
     B Function(D data) mapper,
   );

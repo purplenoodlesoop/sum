@@ -31,6 +31,27 @@ abstract class OperationAsyncData<E extends Object?, D extends Object?> {
     required E error,
   }) = OperationAsyncDataError;
 
+  static Stream<OperationAsyncData<E, D>>
+      fromOperation<E extends Object?, D extends Object?>({
+    required Future<D> Function() body,
+    required E Function(Object error, StackTrace stackTrace) onError,
+    bool shouldRethrow = false,
+  }) async* {
+    yield const OperationAsyncData.loading();
+
+    try {
+      final data = await body();
+
+      yield OperationAsyncData.success(data: data);
+    } on Object catch (e, s) {
+      final error = onError(e, s);
+
+      yield OperationAsyncData.error(error: error);
+
+      if (shouldRethrow) rethrow;
+    }
+  }
+
   D? get data;
 
   E? get error;
@@ -42,6 +63,10 @@ abstract class OperationAsyncData<E extends Object?, D extends Object?> {
   bool get isSuccess;
 
   bool get isError;
+
+  bool get hasData => data != null;
+
+  bool get hasError => error != null;
 
   OperationAsyncData<E, B> map<B extends Object?>(
     B Function(D data) mapper,

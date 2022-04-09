@@ -58,6 +58,10 @@ abstract class SessionAsyncData<E extends Object?, D extends Object?> {
 
   bool get isLoading => isConnecting || isUpdating;
 
+  bool get hasData => data != null;
+
+  bool get hasError => error != null;
+
   SessionAsyncData<E, B> map<B extends Object?>(
     B Function(D data) mapper,
   );

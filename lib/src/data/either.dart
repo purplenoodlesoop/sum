@@ -11,6 +11,24 @@ abstract class Either<L, R> {
 
   const factory Either.right(R right) = Right;
 
+  factory Either.fromNullable(R? right, L Function() onNull) =>
+      right == null ? Left(onNull()) : Right(right);
+
+  factory Either.tryCatch(
+    R Function() body,
+    L Function(Object error, StackTrace stackTrace) onError,
+  ) {
+    try {
+      final right = body();
+
+      return Right(right);
+    } on Object catch (e, s) {
+      final left = onError(e, s);
+
+      return Left(left);
+    }
+  }
+
   L? get left;
 
   R? get right;
