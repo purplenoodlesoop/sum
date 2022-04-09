@@ -11,9 +11,7 @@ abstract class Maybe<A> {
   const factory Maybe.just(A value) = Just;
 
   factory Maybe.fromNullable(A? value) {
-    if (value == null) {
-      return const Nothing();
-    }
+    if (value == null) return const Nothing();
     return Just(value);
   }
 

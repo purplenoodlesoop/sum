@@ -43,6 +43,8 @@ abstract class Either<L, R> {
 
   Either<L, B> flatMap<B>(Either<L, B> Function(R right) mapper);
 
+  Either<L, B> nullableMap<B>(B? Function(R right) mapper, L Function() onNull);
+
   T match<T>({
     required T Function(Left<L, R> either) left,
     required T Function(Right<L, R> either) right,
@@ -103,6 +105,13 @@ class Left<L, R> extends Either<L, R> {
 
   @override
   Either<L, B> flatMap<B>(Either<L, B> Function(R right) mapper) => Left(left);
+
+  @override
+  Either<L, B> nullableMap<B>(
+    B? Function(R right) mapper,
+    L Function() onNull,
+  ) =>
+      Left(left);
 
   @override
   T match<T>({
@@ -187,6 +196,16 @@ class Right<L, R> extends Either<L, R> {
   @override
   Either<L, B> flatMap<B>(Either<L, B> Function(R right) mapper) =>
       mapper(right);
+
+  @override
+  Either<L, B> nullableMap<B>(
+    B? Function(R right) mapper,
+    L Function() onNull,
+  ) =>
+      Either.fromNullable(
+        mapper(right),
+        onNull,
+      );
 
   @override
   T match<T>({

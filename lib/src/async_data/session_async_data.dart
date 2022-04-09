@@ -11,7 +11,6 @@ import 'package:meta/meta.dart';
 ///
 /// An example of usage would be a communications stages with a local database
 /// or a WebSocket.
-
 @immutable
 @sealed
 abstract class SessionAsyncData<E extends Object?, D extends Object?> {
@@ -385,7 +384,7 @@ class SessionAsyncDataConnecting<E extends Object?, D extends Object?>
 
   @override
   bool operator ==(dynamic other) =>
-      identical(this, other) || (other is SessionAsyncDataConnecting<E, D>);
+      identical(this, other) || other is SessionAsyncDataConnecting<E, D>;
 
   @override
   int get hashCode => runtimeType.hashCode;
@@ -818,7 +817,7 @@ class SessionAsyncDataFatalError<E extends Object?, D extends Object?>
   bool get isUpdating => false;
 
   @override
-  bool get isError => true;
+  bool get isError => false;
 
   @override
   bool get isFatalError => true;
@@ -827,9 +826,7 @@ class SessionAsyncDataFatalError<E extends Object?, D extends Object?>
   SessionAsyncData<E, B> map<B extends Object?>(
     B Function(D data) mapper,
   ) =>
-      SessionAsyncDataFatalError(
-        error: error,
-      );
+      SessionAsyncDataFatalError(error: error);
 
   @override
   SessionAsyncData<A, D> mapError<A extends Object?>(

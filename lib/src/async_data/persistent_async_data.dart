@@ -40,16 +40,26 @@ abstract class PersistentAsyncData<E extends Object?, D extends Object?> {
 
   bool get hasError => error != null;
 
-  PersistentAsyncDataIdle<E, D> toIdle() => PersistentAsyncDataIdle(
-        data: data,
+  PersistentAsyncDataIdle<E, D> toIdle({
+    D? data,
+  }) =>
+      PersistentAsyncDataIdle(
+        data: data ?? this.data,
       );
 
-  PersistentAsyncDataLoading<E, D> toLoading() => PersistentAsyncDataLoading(
-        data: data,
+  PersistentAsyncDataLoading<E, D> toLoading({
+    D? data,
+  }) =>
+      PersistentAsyncDataLoading(
+        data: data ?? this.data,
       );
 
-  PersistentAsyncDataError<E, D> toError(E error) => PersistentAsyncDataError(
-        data: data,
+  PersistentAsyncDataError<E, D> toError({
+    required E error,
+    D? data,
+  }) =>
+      PersistentAsyncDataError(
+        data: data ?? this.data,
         error: error,
       );
 
@@ -190,7 +200,7 @@ class PersistentAsyncDataIdle<E extends Object?, D extends Object?>
   @override
   bool operator ==(Object? other) =>
       identical(this, other) ||
-      other is PersistentAsyncDataIdle && data == other.data;
+      (other is PersistentAsyncDataIdle && data == other.data);
 
   @override
   int get hashCode => data.hashCode;
@@ -286,7 +296,7 @@ class PersistentAsyncDataLoading<E extends Object?, D extends Object?>
   @override
   bool operator ==(Object? other) =>
       identical(this, other) ||
-      other is PersistentAsyncDataLoading && data == other.data;
+      (other is PersistentAsyncDataLoading && data == other.data);
 
   @override
   int get hashCode => data.hashCode;
@@ -383,9 +393,9 @@ class PersistentAsyncDataError<E extends Object?, D extends Object?>
   @override
   bool operator ==(Object? other) =>
       identical(this, other) ||
-      other is PersistentAsyncDataError &&
+      (other is PersistentAsyncDataError &&
           data == other.data &&
-          error == other.error;
+          error == other.error);
 
   @override
   int get hashCode => data.hashCode ^ error.hashCode;

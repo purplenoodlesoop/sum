@@ -11,7 +11,6 @@ import 'package:meta/meta.dart';
 ///
 /// An example of usage would be a result of an HTTP request through its
 /// stages.
-
 @immutable
 @sealed
 abstract class OperationAsyncData<E extends Object?, D extends Object?> {
