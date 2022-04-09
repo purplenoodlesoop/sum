@@ -11,6 +11,24 @@ abstract class Either<L, R> {
 
   const factory Either.right(R right) = Right;
 
+  factory Either.fromNullable(R? right, L Function() onNull) =>
+      right == null ? Left(onNull()) : Right(right);
+
+  factory Either.tryCatch(
+    R Function() body,
+    L Function(Object error, StackTrace stackTrace) onError,
+  ) {
+    try {
+      final right = body();
+
+      return Right(right);
+    } on Object catch (e, s) {
+      final left = onError(e, s);
+
+      return Left(left);
+    }
+  }
+
   L? get left;
 
   R? get right;
@@ -24,6 +42,8 @@ abstract class Either<L, R> {
   Either<A, R> mapLeft<A>(A Function(L left) mapper);
 
   Either<L, B> flatMap<B>(Either<L, B> Function(R right) mapper);
+
+  Either<L, B> nullableMap<B>(B? Function(R right) mapper, L Function() onNull);
 
   T match<T>({
     required T Function(Left<L, R> either) left,
@@ -85,6 +105,13 @@ class Left<L, R> extends Either<L, R> {
 
   @override
   Either<L, B> flatMap<B>(Either<L, B> Function(R right) mapper) => Left(left);
+
+  @override
+  Either<L, B> nullableMap<B>(
+    B? Function(R right) mapper,
+    L Function() onNull,
+  ) =>
+      Left(left);
 
   @override
   T match<T>({
@@ -169,6 +196,16 @@ class Right<L, R> extends Either<L, R> {
   @override
   Either<L, B> flatMap<B>(Either<L, B> Function(R right) mapper) =>
       mapper(right);
+
+  @override
+  Either<L, B> nullableMap<B>(
+    B? Function(R right) mapper,
+    L Function() onNull,
+  ) =>
+      Either.fromNullable(
+        mapper(right),
+        onNull,
+      );
 
   @override
   T match<T>({

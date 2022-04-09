@@ -1,4 +1,5 @@
 import 'package:meta/meta.dart';
+import 'package:sum/src/async_data/session_async_data/session_async_data_matcher.dart';
 
 // --- Abstract --- //
 
@@ -11,7 +12,6 @@ import 'package:meta/meta.dart';
 ///
 /// An example of usage would be a communications stages with a local database
 /// or a WebSocket.
-
 @immutable
 @sealed
 abstract class SessionAsyncData<E extends Object?, D extends Object?> {
@@ -57,6 +57,19 @@ abstract class SessionAsyncData<E extends Object?, D extends Object?> {
   bool get isFatalError;
 
   bool get isLoading => isConnecting || isUpdating;
+
+  bool get hasData => data != null;
+
+  bool get hasError => error != null;
+
+  SessionAsyncDataMatcher<E, D> get matcher => SessionAsyncDataMatcher(
+        isInitial: isInitial,
+        isConnecting: isConnecting,
+        isOperational: isIdle || isUpdating || isError,
+        isFatalError: isFatalError,
+        data: data,
+        error: error,
+      );
 
   SessionAsyncData<E, B> map<B extends Object?>(
     B Function(D data) mapper,
@@ -381,7 +394,7 @@ class SessionAsyncDataConnecting<E extends Object?, D extends Object?>
 
   @override
   bool operator ==(dynamic other) =>
-      identical(this, other) || (other is SessionAsyncDataConnecting<E, D>);
+      identical(this, other) || other is SessionAsyncDataConnecting<E, D>;
 
   @override
   int get hashCode => runtimeType.hashCode;
@@ -814,7 +827,7 @@ class SessionAsyncDataFatalError<E extends Object?, D extends Object?>
   bool get isUpdating => false;
 
   @override
-  bool get isError => true;
+  bool get isError => false;
 
   @override
   bool get isFatalError => true;
@@ -823,9 +836,7 @@ class SessionAsyncDataFatalError<E extends Object?, D extends Object?>
   SessionAsyncData<E, B> map<B extends Object?>(
     B Function(D data) mapper,
   ) =>
-      SessionAsyncDataFatalError(
-        error: error,
-      );
+      SessionAsyncDataFatalError(error: error);
 
   @override
   SessionAsyncData<A, D> mapError<A extends Object?>(

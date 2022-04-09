@@ -7,7 +7,13 @@ abstract class Maybe<A> {
 
   @literal
   const factory Maybe.nothing() = Nothing;
+
   const factory Maybe.just(A value) = Just;
+
+  factory Maybe.fromNullable(A? value) {
+    if (value == null) return const Nothing();
+    return Just(value);
+  }
 
   A? get value;
 
@@ -18,6 +24,8 @@ abstract class Maybe<A> {
   Maybe<B> map<B>(B Function(A value) mapper);
 
   Maybe<B> flatMap<B>(Maybe<B> Function(A value) mapper);
+
+  Maybe<B> nullableMap<B>(B? Function(A value) mapper);
 
   T match<T>({
     required T Function(Nothing maybe) nothing,
@@ -74,6 +82,9 @@ class Nothing<A> extends Maybe<A> {
 
   @override
   Maybe<B> flatMap<B>(Maybe<B> Function(A value) mapper) => const Nothing();
+
+  @override
+  Maybe<B> nullableMap<B>(B? Function(A value) mapper) => const Nothing();
 
   @override
   T match<T>({
@@ -151,6 +162,11 @@ class Just<A> extends Maybe<A> {
 
   @override
   Maybe<B> flatMap<B>(Maybe<B> Function(A value) mapper) => mapper(value);
+
+  @override
+  Maybe<B> nullableMap<B>(B? Function(A value) mapper) => Maybe.fromNullable(
+        mapper(value),
+      );
 
   @override
   T match<T>({

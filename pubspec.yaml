@@ -1,6 +1,6 @@
 name: sum
 description: Useful Sum types/Unions expressed in Dart for asynchronous data, error handling, and more!
-version: 0.1.0
+version: 0.2.0
 maintainer: Yakov Karpov (@purplenoodlesoop)
 
 homepage: https://github.com/purplenoodlesoop/sum
